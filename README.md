@@ -48,3 +48,4 @@ Each command will be run sequentially. If any command exits with a non-zero stat
 - refactor runner to be async
 - kill processes that take too long
 - patch 'slack' file optional files parameter
+- config wizard

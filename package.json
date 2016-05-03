@@ -13,9 +13,8 @@
   "dependencies": {
     "bluebird": "^3.3.5",
     "chai": "^3.5.0",
-    "execa": "^0.4.0",
     "expand-tilde": "^1.2.1",
     "lodash": "^4.11.1",
-    "slack": "kyleshockey/slack#patch-1"
+    "slack": "kyleshockey/slack"
   }
 }
