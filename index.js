@@ -40,7 +40,7 @@ var simpleCommands = {
     for (var k in targets) {
       if (targets.hasOwnProperty(k)) {
         var target = targets[k];
-        verbList +=  `${target.name}: ${target.verbs.map(v => `\`${v.name}\``).join(', ')}\n`;
+        verbList +=  `${target.name} (${target.description}): ${target.verbs.map(v => `\`${v.name}\``).join(', ')}\n`;
       }
     }
 
