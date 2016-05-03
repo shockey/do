@@ -1,0 +1,11 @@
+{
+ "apps" : [{
+       "name"        : "do",
+       "script"      : "index.js",
+       "watch"       : true,
+       "log_date_format"  : "YYYY-MM-DD HH:mm:ss Z",
+       "max_restarts": 0,
+       "autorestart" : false,
+       "node_args": "--harmony --harmony-destructuring"
+   }]
+}
