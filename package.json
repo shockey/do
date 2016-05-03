@@ -15,6 +15,6 @@
     "chai": "^3.5.0",
     "execa": "^0.4.0",
     "lodash": "^4.11.1",
-    "slack": "^6.1.0"
+    "slack": "kyleshockey/patch-1"
   }
 }
