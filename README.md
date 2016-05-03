@@ -2,15 +2,13 @@
 
 ### Using do
 
-Once everything is configured, you can use do!
-
 Within Slack, get do's attention by telling it to run the `example` target's `test` verb, like so:
 
 `@do test example`
 
-Do will acknowledge your response in the channel you're in, and then announce the task in your output channel.
+Do will acknowledge your request in the channel you're in, and begin working!
 
-Once the task is complete, Do will update the task announcement with the final status and output logs.
+Once the verb is complete, do will announce the verb's final status and output logs.
 
 If you ever forget what targets and verbs you have available to you, hit up do for a list of them by typing `@do list`.
 
