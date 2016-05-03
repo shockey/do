@@ -1,4 +1,5 @@
 var exec = require('child_process').spawnSync;
+var expandTilde = require('expand-tilde');
 
 function run(slackbot, bundle, verb, target) {
   slackbot.send({
@@ -41,7 +42,7 @@ function execSequence(sequence, target) {
     var bin = cmd[0];
     var args = cmd.slice(1);
     var res = exec(bin, args || [], {
-      cwd: target.workingDir,
+      cwd: expandTilde(target.workingDir),
       shell: true
     });
 
