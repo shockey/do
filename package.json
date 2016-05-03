@@ -1,0 +1,20 @@
+{
+  "name": "do",
+  "version": "0.0.0",
+  "description": "Server task runner",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit 0",
+    "start": "node --harmony --harmony-destructuring index.js",
+    "setup": "node wizard.js"
+  },
+  "author": "Kyle Shockey <kyle@wemash.com>",
+  "license": "None",
+  "dependencies": {
+    "bluebird": "^3.3.5",
+    "chai": "^3.5.0",
+    "execa": "^0.4.0",
+    "lodash": "^4.11.1",
+    "slack": "^6.1.0"
+  }
+}

@@ -1,0 +1,87 @@
+'use strict';
+
+let slack = require('slack');
+let config = require('../../config');
+let log = require('../utils/log').bind(null, 'slack');
+var Promise = require('bluebird');
+
+
+let bot = slack.rtm.client();
+let token = config.slack.token;
+
+log(`init`);
+
+bot.hello(()=> log('Connected to Slack'));
+
+var mentionString = null;
+
+slack.auth.test({token}, (err, data) => {
+  // get our user id so we can know when we're mentioned
+  if(err) {
+    throw new Error(err)
+  } else {
+    mentionString = `<@${data.user_id}>`;
+  }
+});
+
+bot.message(msg => {
+  if(msg.text && msg.text.indexOf(mentionString) === 0) {
+    processMention(msg);
+  }
+});
+
+bot.listen({token});
+
+// helper fns
+
+function processMention(msg) {
+  let cmd = msg.text.replace(`${mentionString} `, '').split(' ');
+  handlerFor('input')({cmd, msg});
+};
+
+function send(obj, fn) {
+  return new Promise((resolve, reject) => {
+    slack.chat.postMessage({
+      token,
+      channel: obj.channel || config.slack.outputChannel,
+      text: obj.text,
+      username: 'do',
+      icon_emoji: ':alien:'
+    }, (err, data) => {
+      if(err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    })
+  })
+}
+
+function createPost(obj) {
+  var {content, comment, filename} = obj;
+  return slack.files.upload({
+    token,
+    content,
+    initial_comment: comment,
+    file: null,
+    filename,
+    channels: config.slack.outputChannel
+  }, () => {})
+}
+
+// eventing stuff
+
+// events:
+// 'input': fires when a valid input command is recieved
+
+let handlers = {};
+
+function registerEvent(evt, fn) {
+  return handlers[evt] = fn;
+};
+
+function handlerFor(evt) {
+  return handlers[evt] || log;
+}
+
+module.exports = {on: registerEvent, send, createPost};
