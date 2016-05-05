@@ -45,7 +45,7 @@ function send(obj, fn) {
       token,
       channel: obj.channel || config.slack.outputChannel,
       text: obj.text,
-      username: config.slack.username,
+      username: 'do',
       icon_emoji: ':alien:'
     }, (err, data) => {
       if(err) {
