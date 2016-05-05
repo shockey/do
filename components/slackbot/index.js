@@ -48,7 +48,7 @@ function send(obj, fn) {
       channel: obj.channel || config.slack.outputChannel,
       text: obj.text,
       username,
-      icon_emoji: ':alien:'
+      icon_emoji: config.slack.emoji
     }, (err, data) => {
       if(err) {
         reject(err);
