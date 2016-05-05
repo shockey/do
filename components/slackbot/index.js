@@ -8,6 +8,7 @@ var Promise = require('bluebird');
 
 let bot = slack.rtm.client();
 let token = config.slack.token;
+let username = undefined;
 
 log(`init`);
 
@@ -20,6 +21,7 @@ slack.auth.test({token}, (err, data) => {
   if(err) {
     throw new Error(err)
   } else {
+    username = data.user;
     mentionString = `<@${data.user_id}>`;
   }
 });
@@ -45,6 +47,7 @@ function send(obj, fn) {
       token,
       channel: obj.channel || config.slack.outputChannel,
       text: obj.text,
+      username,
       icon_emoji: ':alien:'
     }, (err, data) => {
       if(err) {
