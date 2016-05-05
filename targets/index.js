@@ -10,13 +10,14 @@ fs.readdirSync(path.join(__dirname)).forEach(function(file) {
   if(file === 'index.js') {
     return;
   }
-  var target = require("./" + file);
   try {
+    var target = require("./" + file);
     expect(target).to.be.a('object');
     expect(target).to.have.all.keys(['verbs', 'name', 'description', 'workingDir'])
     expect(target.verbs).to.be.a('array');
+
   } catch(e) {
-    console.log(`Oops! There was a problem parsing targets/${file}`);
+    console.log(`Oops! There was a problem parsing targets/${file}: \n'${e}'`);
     console.log('Exiting.')
     process.exit();
   }
