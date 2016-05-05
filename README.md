@@ -12,7 +12,7 @@ Once the verb is complete, do will announce the verb's final status and output l
 
 If you ever forget what targets and verbs you have available to you, hit up do for a list of them by typing `@do list`.
 
-You can also issue any command to do by DMing it. When DMing do, it's still necessary to prefix your instructions with `@do`.
+You can also issue any command to do by DMing it. When DMing do, it's not necessary to prefix your instructions with `@do`.
 
 ### Configuring targets
 

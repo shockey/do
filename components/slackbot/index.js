@@ -27,7 +27,15 @@ slack.auth.test({token}, (err, data) => {
 });
 
 bot.message(msg => {
-  if(msg.text && msg.text.indexOf(mentionString) === 0) {
+  if(msg.subtype === 'bot_message') {
+    return;
+  }
+  
+  if(msg.channel[0] === 'D') {
+    // if we have recieved a direct message
+    console.log(msg);
+    processMention(msg);
+  } else if(msg.text && msg.text.indexOf(mentionString) === 0) {
     processMention(msg);
   }
 });
