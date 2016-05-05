@@ -37,7 +37,10 @@ bot.listen({token});
 // helper fns
 
 function processMention(msg) {
-  let cmd = msg.text.replace(`${mentionString} `, '').split(' ');
+  let cmd = msg.text
+              .replace('>:', '>')
+              .replace(`${mentionString} `, '')
+              .split(' ');
   handlerFor('input')({cmd, msg});
 };
 
