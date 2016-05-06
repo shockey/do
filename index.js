@@ -7,6 +7,7 @@ var slackbot = require('./components/slackbot');
 var targets = require('./targets');
 var os = require('os');
 var verbRunner = require('./components/utils/verb-runner');
+var pkg = require('./package.json')
 
 
 slackbot.on('input', bundle => {
@@ -26,7 +27,7 @@ var simpleCommands = {
   hello(bundle) {
     slackbot.send({
       channel: bundle.msg.channel,
-      text: `hi! i'm running on ${os.hostname()} :simple_smile:`
+      text: `hi! i'm running on ${os.hostname()} with version ${pkg.version} :simple_smile:`
     })
   },
   help(bundle) {
