@@ -20,6 +20,10 @@ pm2.connect(function(err) {
 
   pm2.start(pm2config, function(err, apps) {
     pm2.disconnect();   // Disconnect from PM2
-    if (err) throw err
+    if (err) {
+      throw err
+    } else {
+      console.log('Do has been started via PM2!');
+    }
   });
 });
