@@ -27,7 +27,7 @@ var simpleCommands = {
   hello(bundle) {
     slackbot.send({
       channel: bundle.msg.channel,
-      text: `hi! i'm running on ${os.hostname()} with version ${pkg.version} :simple_smile:`
+      text: `hi! i'm running Do version ${pkg.version} on ${os.hostname()} :simple_smile:`
     })
   },
   help(bundle) {
