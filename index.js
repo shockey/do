@@ -8,7 +8,6 @@ var targets = require('./targets');
 var os = require('os');
 var verbRunner = require('./components/utils/verb-runner');
 var pkg = require('./package.json')
-var pm2 = require('pm2')
 
 
 slackbot.on('input', bundle => {
@@ -50,50 +49,6 @@ var simpleCommands = {
       channel: bundle.msg.channel,
       text: verbList
     })
-  },
-  pm2(bundle) {
-    let pm2Action = bundle.cmd[1];
-    let pm2TargetProcess = bundle.cmd[2];
-
-    pm2.connect(function(err) {
-      if (err) {
-        console.error(err);
-        slackbot.send({
-          channel: bundle.msg.channel,
-          text: `yikes! i wasn't able to hook into pm2. are you sure it's running?`
-        })
-      }
-
-      if(pm2Action === 'start') {
-        pm2.start({
-          script: pm2TargetProcess,         // Script to be run
-        }, handlerFn);
-      }
-
-      if(pm2Action === 'stop') {
-        pm2.stop(pm2TargetProcess, handlerFn);
-      }
-
-      if(pm2Action === 'restart') {
-        pm2.restart(pm2TargetProcess, handlerFn);
-      }
-
-      function handlerFn(err, apps) {
-        pm2.disconnect();   // Disconnect from PM2
-        if (err) {
-          slackbot.send({
-            channel: bundle.msg.channel,
-            text: `bad news! there was a problem. pm2 says: \`${err.msg}\``
-          })
-        } else {
-          slackbot.send({
-            channel: bundle.msg.channel,
-            text: `consider it done! 😎`
-          })
-          slackbot.send({text: `\`${pm2TargetProcess} ${pm2Action}\` succeeded!`})
-        }
-      };
-    });
   }
 };
 
