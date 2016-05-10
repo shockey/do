@@ -78,25 +78,6 @@ var simpleCommands = {
         pm2.restart(pm2TargetProcess, handlerFn);
       }
 
-      if(pm2Action === 'list') {
-        pm2.list((err, list) => {
-          if(err) {
-            slackbot.send({
-              channel: bundle.msg.channel,
-              text: `bad news! there was a problem. pm2 says: \`${err.msg}\``
-            })
-          } else {
-            var res = 'PM2 processes:\n```\n';
-            list.forEach(proc => res += `${proc.name}: ${proc.pm2_env.status} \n`)
-            res += '```';
-            slackbot.send({
-              channel: bundle.msg.channel,
-              text: res
-            })
-          }
-        });
-      }
-
       function handlerFn(err, apps) {
         pm2.disconnect();   // Disconnect from PM2
         if (err) {
@@ -108,9 +89,8 @@ var simpleCommands = {
           slackbot.send({
             channel: bundle.msg.channel,
             text: `consider it done! 😎`
-          }).then(() => {
-            slackbot.send({text: `\`${pm2TargetProcess} ${pm2Action}\` succeeded!`});
           })
+          slackbot.send({text: `\`${pm2TargetProcess} ${pm2Action}\` succeeded!`})
         }
       };
     });
