@@ -1,4 +1,4 @@
-var exec = require('child_process').spawnSync;
+var exec = require('child_process').exec;
 var expandTilde = require('expand-tilde');
 var Promise = require('bluebird');
 
@@ -54,14 +54,10 @@ function unwrapPromises({arr, i = 0, results = []}) {
 
 function executeInShell({binary, args, target}) {
   return new Promise((resolve, reject) => {
-    var execRes = exec(binary, args || [], {
+    exec(`${binary} ${args.join(' ')}`, {
       cwd: expandTilde(target.workingDir),
       shell: true
-    });
-    resolve({
-      execRes,
-      cmd: (`${binary} ${args.join(' ')}`)
-    });
+    }, (error, stdout, stderr) => resolve({error, stdout, stderr, cmd: `${binary} ${args.join(' ')}`}));
   })
 }
 
@@ -74,13 +70,13 @@ function processResult(outputs) {
   outputs.forEach(output => {
     outputLog += `>>> ${output.cmd} \n`;
 
-    if(output.execRes.status === 0) {
-      outputLog += `${output.execRes.stdout.toString()}`;
-      if(output.execRes.stderr) {
-        outputLog += (output.execRes.stderr.toString())
+    if(output.error === null) {
+      outputLog += `${output.stdout.toString()}`;
+      if(output.stderr) {
+        outputLog += (output.stderr.toString())
       }
     } else {
-      outputLog += (`${output.execRes.stderr ? output.execRes.stderr.toString() : output.execRes.error.code}`);
+      outputLog += (`${output.stderr ? output.stderr.toString() : output.error}`);
       isSuccessful = false;
     }
   })
