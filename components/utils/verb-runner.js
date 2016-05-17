@@ -21,12 +21,24 @@ function execSequence(sequence, target) {
 
   // prepare the function-wrapped promise array
   sequence.forEach(cmd => {
-    if(Array.isArray(cmd)) {
-      cmd = cmd.join(' ');
-    }
-    promiseArray.push(function() {
-      return executeInShell({cmd, target});
-    });
+    if(typeof cmd === 'function') {
+      promiseArray.push(function() {
+        return cmd()
+          .then(res => ({
+            cmd: '(anonymous fn)',
+            stdout: res,
+            error: null
+          }))
+      });
+    } else {
+      if(Array.isArray(cmd)) {
+        cmd = cmd.join(' ');
+      }
+      promiseArray.push(function() {
+        return executeInShell({cmd, target});
+      });
+    };
+
   })
 
   // kick off the unwrap step
