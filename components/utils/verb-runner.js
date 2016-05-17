@@ -62,8 +62,6 @@ function executeInShell({binary, args, target}) {
 }
 
 function processResult(outputs) {
-  console.log(outputs);
-
   var isSuccessful = true;
   var outputLog = '';
 
