@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'test',
       sequence: [
-        ['echo', `'hello'`]
+        'echo hello'
       ]
     }
   ],

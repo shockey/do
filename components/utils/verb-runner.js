@@ -21,12 +21,11 @@ function execSequence(sequence, target) {
 
   // prepare the function-wrapped promise array
   sequence.forEach(cmd => {
+    if(Array.isArray(cmd)) {
+      cmd = cmd.join(' ');
+    }
     promiseArray.push(function() {
-      return executeInShell({
-        binary: cmd[0],
-        args: cmd.slice(1),
-        target
-      });
+      return executeInShell({cmd, target});
     });
   })
 
@@ -52,12 +51,12 @@ function unwrapPromises({arr, i = 0, results = []}) {
   }
 }
 
-function executeInShell({binary, args, target}) {
+function executeInShell({cmd, target}) {
   return new Promise((resolve, reject) => {
-    exec(`${binary} ${args.join(' ')}`, {
+    exec(cmd, {
       cwd: expandTilde(target.workingDir),
       shell: true
-    }, (error, stdout, stderr) => resolve({error, stdout, stderr, cmd: `${binary} ${args.join(' ')}`}));
+    }, (error, stdout, stderr) => resolve({error, stdout, stderr, cmd}));
   })
 }
 
