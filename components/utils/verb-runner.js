@@ -20,6 +20,8 @@ function execSequence(sequence, target) {
   var promiseArray = [];
 
   // prepare the function-wrapped promise array
+  // we wrap promises so they don't start executing until we're ready
+  // so we can run commands strictly in sequence!
   sequence.forEach(cmd => {
     if(typeof cmd === 'function') {
       promiseArray.push(function() {
@@ -32,6 +34,7 @@ function execSequence(sequence, target) {
       });
     } else {
       if(Array.isArray(cmd)) {
+        // support legacy array format, e.g.: ['npm', 'install']
         cmd = cmd.join(' ');
       }
       promiseArray.push(function() {
@@ -42,11 +45,12 @@ function execSequence(sequence, target) {
   })
 
   // kick off the unwrap step
-  // console.log(unwrapPromises({arr: promiseArray}));
   return unwrapPromises({arr: promiseArray});
 }
 
 function unwrapPromises({arr, i = 0, results = []}) {
+  // recursive fn that acts like a map function,
+  // and flows like a waterfall function.
   var fn = arr[i];
   if(arr[i+1]) {
     return fn()
