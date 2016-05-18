@@ -1,8 +1,8 @@
 // Target loader
 
-var fs = require('fs');
-var path = require('path');
-var expect = require('chai').expect;
+import fs from 'fs'
+import path from 'path'
+import chai from 'chai'
 
 var targets = {};
 
@@ -12,9 +12,9 @@ fs.readdirSync(path.join(__dirname)).forEach(function(file) {
   }
   try {
     var target = require("./" + file);
-    expect(target).to.be.a('object');
-    expect(target).to.have.all.keys(['verbs', 'name', 'description', 'workingDir'])
-    expect(target.verbs).to.be.a('array');
+    chai.expect(target).to.be.a('object');
+    chai.expect(target).to.have.all.keys(['verbs', 'name', 'description', 'workingDir'])
+    chai.expect(target.verbs).to.be.a('array');
 
   } catch(e) {
     console.log(`Oops! There was a problem parsing targets/${file}: \n'${e}'`);

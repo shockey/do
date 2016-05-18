@@ -1,14 +1,15 @@
 'use strict';
 
-let slack = require('slack');
-let config = require('../../config');
-let log = require('../utils/log').bind(null, 'slack');
-var Promise = require('bluebird');
+import slack from 'slack'
+import config from '../../config'
+import Log from '../utils/log'
+import Promise from 'bluebird'
 
 
 let bot = slack.rtm.client();
 let token = config.slack.token;
 let username = undefined;
+let log = Log.bind(null, 'slack');
 
 log(`init`);
 
@@ -30,7 +31,7 @@ bot.message(msg => {
   if(msg.subtype === 'bot_message') {
     return;
   }
-  
+
   if(msg.channel[0] === 'D') {
     // if we have recieved a direct message
     console.log(msg);

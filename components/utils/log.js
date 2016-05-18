@@ -5,6 +5,6 @@ function pad(str, len) {
   return str;
 };
 
-module.exports = function(ns, msg) {
+export default function(ns, msg) {
   console.log(`do:${pad(ns, 8)} ${JSON.stringify(msg)}`)
 };

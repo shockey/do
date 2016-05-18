@@ -1,10 +1,9 @@
-
-var _ = require('lodash');
-var slackbot = require('./slackbot');
-var targets = require('../targets');
-var os = require('os');
-var verbRunner = require('./utils/verb-runner');
-var pkg = require('../package.json')
+import _ from 'lodash'
+import slackbot from './slackbot'
+import targets from '../targets'
+import os from 'os'
+import verbRunner from './utils/verb-runner'
+import pkg from '../package.json'
 
 
 slackbot.on('input', bundle => {

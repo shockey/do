@@ -1,6 +1,6 @@
-var exec = require('child_process').exec;
-var expandTilde = require('expand-tilde');
-var Promise = require('bluebird');
+import {exec} from 'child_process'
+import expandTilde from 'expand-tilde'
+import Promise from 'bluebird'
 
 
 function run(slackbot, bundle, verb, target) {
