@@ -12,6 +12,7 @@
   "author": "Kyle Shockey <kyle@wemash.com>",
   "license": "None",
   "dependencies": {
+    "babel-preset-es2015": "^6.9.0",
     "bluebird": "^3.3.5",
     "chai": "^3.5.0",
     "expand-tilde": "^1.2.1",
