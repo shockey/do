@@ -6,5 +6,5 @@ function pad(str, len) {
 };
 
 export default function(ns, msg) {
-  console.log(`do:${pad(ns, 8)} ${JSON.stringify(msg)}`)
+  console.log(`do:${pad(ns, 8)} ${msg}`)
 };
