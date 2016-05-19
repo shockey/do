@@ -1,9 +1,13 @@
 import {exec} from 'child_process'
 import expandTilde from 'expand-tilde'
 import Promise from 'bluebird'
+import Log from '../utils/log'
+
+let log = Log.bind(null, 'runner');
 
 
 function run(slackbot, bundle, verb, target) {
+  log(`Starting ${verb.name} ${target.name}`)
   slackbot.send({
     channel: bundle.msg.channel,
     text: `i'm on it! 👍`
@@ -69,9 +73,9 @@ function unwrapPromises({arr, i = 0, results = []}) {
 
 function executeInShell({cmd, target}) {
   return new Promise((resolve, reject) => {
+    log(`running '${cmd}'`)
     exec(cmd, {
-      cwd: expandTilde(target.workingDir),
-      shell: true
+      cwd: expandTilde(target.workingDir)
     }, (error, stdout, stderr) => resolve({error, stdout, stderr, cmd}));
   })
 }
