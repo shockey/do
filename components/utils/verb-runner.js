@@ -32,7 +32,7 @@ function execSequence(sequence, target) {
         return cmd()
           .then(res => ({
             cmd: '(anonymous fn)',
-            stdout: res,
+            stdout: res + '\n',
             error: null
           }))
       });
@@ -96,6 +96,7 @@ function processResult(outputs) {
       outputLog += (`${output.stderr ? output.stderr.toString() : output.error}`);
       isSuccessful = false;
     }
+
   })
 
   return {outputLog, isSuccessful};
