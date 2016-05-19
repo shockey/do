@@ -31,10 +31,15 @@ function execSequence(sequence, target) {
       promiseArray.push(function() {
         return cmd()
           .then(res => ({
-            cmd: '(anonymous fn)',
+            cmd: 'anonymous fn',
             stdout: res + '\n',
             error: null
           }))
+          .catch(res => new Promise((resolve, reject) => reject({
+              cmd: 'anonymous fn (failed)',
+              error: res + '\n'
+            }))
+          )
       });
     } else {
       if(Array.isArray(cmd)) {
@@ -61,7 +66,11 @@ function unwrapPromises({arr, i = 0, results = []}) {
       .then(res => {
         results.push(res);
         return unwrapPromises({arr, i: i + 1, results});
-      });
+      })
+      .catch(res => {
+        results.push(res);
+        return new Promise(r => r(results));
+      })
   } else {
     return fn()
       .then(res => {
@@ -76,7 +85,13 @@ function executeInShell({cmd, target}) {
     log(`running '${cmd}'`)
     exec(cmd, {
       cwd: expandTilde(target.workingDir)
-    }, (error, stdout, stderr) => resolve({error, stdout, stderr, cmd}));
+    }, (error, stdout, stderr) => {
+      if(error) {
+        reject({error, stdout, stderr, cmd: cmd + ' (failed)'});
+      } else {
+        resolve({error, stdout, stderr, cmd});
+      }
+    });
   })
 }
 
