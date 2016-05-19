@@ -4,8 +4,7 @@
        "script"      : "index.js",
        "watch"       : false,
        "log_date_format"  : "YYYY-MM-DD HH:mm:ss Z",
-       "max_restarts": 0,
-       "autorestart" : true,
-       "node_args": "--harmony --harmony-destructuring"
+       "max_restarts": 20,
+       "autorestart" : true
    }]
 }
